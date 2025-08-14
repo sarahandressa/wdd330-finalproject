@@ -1,0 +1,6 @@
+import{s as d}from"./api.DABdBofW.js";import{g as a,s as c}from"./club.C9QPlMqF.js";document.addEventListener("DOMContentLoaded",()=>{const n=document.getElementById("searchBookForm"),e=document.getElementById("searchResults");!n||!e||n.addEventListener("submit",async u=>{u.preventDefault();const t=document.getElementById("bookQuery").value.trim(),o=n.dataset.clubId;if(!t){alert("Enter a term to search.");return}if(!o){console.error("❌ No clubId found onform.dataset.clubId");return}e.innerHTML="<p>🔍 Searching for books...</p>";const i=await d();if(i.length===0){e.innerHTML="<p>No books found.</p>";return}e.innerHTML="",i.forEach(r=>{const s=document.createElement("div");s.classList.add("book-result"),s.innerHTML=`
+        <img src="${r.thumbnail}" alt="${r.title}">
+        <h4>${r.title}</h4>
+        <p>${r.authors.join(", ")}</p>
+        <button>Sugerir</button>
+      `,s.querySelector("button").addEventListener("click",()=>{l(o,r),s.querySelector("button").disabled=!0,s.querySelector("button").textContent="✅ Suggested"}),e.appendChild(s)})})});function l(n,e){const u=a(),t=u.find(o=>o.id===n);if(!t){console.error(`❌ Club with id ${n} not found`);return}if(t.suggestions||(t.suggestions=[]),t.suggestions.some(o=>o.id===e.id)){alert("This book has already been suggested.");return}t.suggestions.push(e),c(u)}

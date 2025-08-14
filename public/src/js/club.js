@@ -38,6 +38,7 @@ export function initClubCreation() {
 
     if (!name || !description) {
       alert('Please fill in both Club Name and Description');
+      return;
     }
 
     createClub(name, description);
@@ -58,9 +59,37 @@ export function suggestBookToClub(clubId, book) {
     thumbnail: book.volumeInfo.imageLinks?.thumbnail || '',
     description: book.volumeInfo.description || '',
     votes: 0,
+    status: 'available',
+    progress: 0,
   };
 
   club.suggestions.push(suggestion);
+  saveClubs(clubs);
+  return true;
+}
+
+export function updateBookStatus(clubId, bookId, status) {
+  const clubs = getClubs();
+  const club = clubs.find((c) => c.id === clubId);
+  if (!club) return false;
+
+  const book = club.suggestions.find((b) => b.id === bookId);
+  if (!book) return false;
+
+  book.status = status; // 'available' | 'reading' | 'completed'
+  saveClubs(clubs);
+  return true;
+}
+
+export function updateBookProgress(clubId, bookId, progress) {
+  const clubs = getClubs();
+  const club = clubs.find((c) => c.id === clubId);
+  if (!club) return false;
+
+  const book = club.suggestions.find((b) => b.id === bookId);
+  if (!book) return false;
+
+  book.progress = Math.min(Math.max(progress, 0), 100);
   saveClubs(clubs);
   return true;
 }

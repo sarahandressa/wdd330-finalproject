@@ -1,4 +1,4 @@
-import { getClubs } from './club.js';
+import { getClubs, updateBookStatus } from './club.js';
 
 function getClubIdFromURL() {
   const params = new URLSearchParams(window.location.search);
@@ -25,9 +25,20 @@ function renderClubDetails() {
     <ul>${club.members.map((m) => `<li>${m}</li>`).join('')}</ul>
     <h3>Book Suggestions</h3>
     <div id="suggestionsList"></div>
+    <button id="surpriseBookBtn">Surprise Me!</button>
   `;
 
   renderSuggestions(club);
+
+  const surpriseBtn = document.getElementById('surpriseBookBtn');
+  if (surpriseBtn) {
+    surpriseBtn.addEventListener('click', () => {
+      import('./surpriseBook.js').then((mod) => mod.surpriseBook(club.id));
+    });
+  }
+
+  const searchForm = document.getElementById('searchBookForm');
+  if (searchForm) searchForm.dataset.clubId = club.id;
 }
 
 function renderSuggestions(club) {
@@ -49,15 +60,26 @@ function renderSuggestions(club) {
       <p>${suggestion.description}</p>
       <span>Votes: ${suggestion.votes}</span>
     `;
+
+    renderBookStatusButtons(club, suggestion, div);
+
     container.appendChild(div);
   });
 }
 
-const searchForm = document.getElementById('searchBookForm');
-if (searchForm) {
-  searchForm.dataset.clubId = club.id;
+function renderBookStatusButtons(club, suggestion, container) {
+  const statuses = ['available', 'reading', 'completed'];
+  statuses.forEach((status) => {
+    const btn = document.createElement('button');
+    btn.textContent = status;
+    btn.className = suggestion.status === status ? 'active' : '';
+    btn.addEventListener('click', () => {
+      updateBookStatus(club.id, suggestion.id, status);
+      renderSuggestions(club);
+    });
+    container.appendChild(btn);
+  });
 }
 
-import('./suggestBook.js');
-
 document.addEventListener('DOMContentLoaded', renderClubDetails);
+import('./suggestBook.js');

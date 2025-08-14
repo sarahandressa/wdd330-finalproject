@@ -10,7 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" crossorigin href="/assets/styles.DXIS44ss.css">
+    <script type="module" crossorigin src="/assets/book.DqvENCCm.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/styles.2Y5MNT98.js">
+    <link rel="modulepreload" crossorigin href="/assets/api.DABdBofW.js">
+    <link rel="stylesheet" crossorigin href="/assets/styles.C3MvUMMk.css">
   </head>
 
   <body>
@@ -20,42 +23,27 @@
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="club.html">My Club</a></li>
-          <li><a href="book.html">Book Details</a></li>
         </ul>
       </nav>
     </header>
 
     <main id="book-details">
       <section class="book-info">
-        <h2>The Great Gatsby</h2>
-        <p><strong>Author:</strong> F. Scott Fitzgerald</p>
-        <img
-          src="https://books.google.com/books/content?id=xyz&printsec=frontcover&img=1&zoom=1"
-          alt="Book Cover"
-        />
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
-          vel velit at erat commodo efficitur.
-        </p>
+        <h2 id="book-title">Loading...</h2>
+        <p><strong>Author:</strong> <span id="book-author"></span></p>
+        <img id="book-cover" src="" alt="Book Cover" />
+        <p id="book-description"></p>
       </section>
 
       <section class="actions">
-        <button>Mark as Reading</button>
-        <button>Mark as Finished</button>
-        <button>Add to Timeline</button>
+        <button id="markReading">Mark as Reading</button>
+        <button id="markFinished">Mark as Finished</button>
+        <button id="addTimeline">Add to Timeline</button>
       </section>
 
       <section class="discussion">
         <h3>Discussion</h3>
-        <div id="discussionBoard">
-          <div class="comment">
-            <strong>Alice:</strong> I love the symbolism in chapter 2!
-          </div>
-          <div class="comment">
-            <strong>Bob:</strong> The pacing is slower than I expected, but
-            still good.
-          </div>
-        </div>
+        <div id="discussionBoard"></div>
         <form id="commentForm">
           <textarea
             placeholder="Write your comment here..."
@@ -67,7 +55,8 @@
     </main>
 
     <footer>
-      <p>&copy; 2025 Book Club Bliss</p>
+      <p>&copy; 2025 📚 Book Club Bliss 📚</p>
     </footer>
+
   </body>
 </html>

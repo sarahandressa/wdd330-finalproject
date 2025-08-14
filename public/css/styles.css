@@ -52,12 +52,6 @@ section {
   margin-bottom: 3rem;
 }
 
-.intro h2 {
-  font-family: var(--font-heading);
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-}
-
 .create-club form,
 .book-search {
   background: white;
@@ -97,7 +91,8 @@ button:hover {
   margin-top: 1rem;
 }
 
-.book-card {
+.book-card,
+.book-suggestion {
   background: white;
   padding: 1rem;
   margin-bottom: 1.5rem;
@@ -106,10 +101,21 @@ button:hover {
   border-radius: 8px;
 }
 
-.book-card img {
+.book-card img,
+.book-suggestion img {
   max-width: 100px;
   display: block;
   margin: 0.5rem 0;
+}
+
+.book-suggestion {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.book-suggestion:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 footer {
@@ -133,5 +139,11 @@ footer {
 
   button {
     width: 100%;
+  }
+
+  .club-card,
+  .book-suggestion {
+    width: 100%;
+    margin: 0 0 1rem 0;
   }
 }

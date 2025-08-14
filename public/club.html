@@ -26,7 +26,7 @@
     </header>
 
     <main id="club-page">
-      <section>
+      <section class="intro">
         <h2>My Book Club</h2>
         <p>Here you can manage your club, members, and book suggestions.</p>
       </section>
@@ -43,23 +43,16 @@
       <section class="book-suggestions">
         <h3>Book Suggestions</h3>
 
-        <!-- Formulário para buscar livros via API -->
         <form id="searchBookForm" data-club-id="">
           <input type="text" placeholder="Search for a book..." />
           <button type="submit">Search</button>
         </form>
 
-        <!-- Lista de resultados da busca -->
         <div id="searchResults"></div>
 
-        <!-- Lista de livros sugeridos já existentes -->
-        <div id="suggestionsList">
-          <div class="book-card">
-            <h4>The Great Gatsby</h4>
-            <p><em>F. Scott Fitzgerald</em></p>
-            <button>Vote</button>
-          </div>
-        </div>
+        <div id="suggestionsList"></div>
+
+        <button id="surpriseBookBtn">Surprise Me!</button>
       </section>
 
       <section class="timeline">
