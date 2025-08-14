@@ -2,27 +2,29 @@ import { searchBooks } from './api.js';
 import { initClubCreation } from './club.js';
 
 function createBookCard(book, onSuggest) {
-  const { volumeInfo } = book;
-  const title = volumeInfo.title || 'No title';
-  const authors = volumeInfo.authors
-    ? volumeInfo.authors.join(', ')
-    : 'Unknown author';
-  const thumbnail = volumeInfo.imageLinks?.thumbnail || '';
-  const description = volumeInfo.description || 'No description available';
+  const { title, authors, thumbnail, description } = book;
 
+  const authorsText = authors
+    ? authors.join(', ')
+    : 'Unknown author';
+  const truncatedDescription = description ? description.substring(0, 150) + '...' : 'No description available';
+  
   const card = document.createElement('div');
   card.classList.add('book-card');
 
   card.innerHTML = `
-    <h4>${title}</h4>
-    <p><em>${authors}</em></p>
-    ${thumbnail ? `<img src="${thumbnail}" alt="Cover of ${title}" />` : ''}
-    <p>${description.substring(0, 150)}...</p>
+    <a href="book.html?id=${book.id}">
+      <h4>${title || 'No title'}</h4>
+      <p><em>${authorsText}</em></p>
+      ${thumbnail ? `<img src="${thumbnail}" alt="Cover of ${title || 'Book'}" />` : ''}
+      <p>${truncatedDescription}</p>
+    </a>
     <button class="suggest-book-btn">Suggest this Book</button>
   `;
 
   const button = card.querySelector('.suggest-book-btn');
-  button.addEventListener('click', () => {
+  button.addEventListener('click', (e) => {
+    e.preventDefault(); // Impede o link de ser seguido
     if (typeof onSuggest === 'function') onSuggest(book);
   });
 
@@ -36,7 +38,7 @@ function clearSearchResults(container) {
 function renderSearchResults(books, container, onSuggest) {
   clearSearchResults(container);
 
-  if (books.length === 0) {
+  if (!books || books.length === 0) {
     container.innerHTML = '<p>No results found.</p>';
     return;
   }
@@ -73,22 +75,5 @@ export function initBookSearch(onSuggest) {
 
 document.addEventListener('DOMContentLoaded', () => {
   initClubCreation();
-
-  initBookSearch((book) => {
-    import('./club.js').then(({ getClubs, suggestBookToClub }) => {
-      const clubs = getClubs();
-      if (clubs.length === 0) {
-        alert('Please create a club first to suggest books.');
-        return;
-      }
-
-      const clubId = clubs[0].id;
-      const success = suggestBookToClub(clubId, book);
-      if (success) {
-        alert(
-          `Book "${book.volumeInfo.title}" suggested to club "${clubs[0].name}".`,
-        );
-      }
-    });
-  });
+  
 });

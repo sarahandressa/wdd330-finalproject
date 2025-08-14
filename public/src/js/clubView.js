@@ -1,85 +1,80 @@
-import { getClubs, updateBookStatus } from './club.js';
+import { getClubs, suggestBookToClub } from './club.js';
+import { initBookSearch } from './ui.js';
+import { surpriseBook } from './surpriseBook.js';
 
-function getClubIdFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get('id');
+// Função para renderizar os detalhes do clube
+function renderClubDetails(club) {
+  const title = document.querySelector('.intro h2');
+  if (title) title.textContent = club.name;
+
+  const suggestionsList = document.getElementById('suggestionsList');
+  if (suggestionsList) {
+    suggestionsList.innerHTML = '';
+    if (club.suggestions && club.suggestions.length > 0) {
+      club.suggestions.forEach(s => {
+        const div = document.createElement('div');
+        div.classList.add('book-suggestion-item');
+        div.innerHTML = `
+          <h4>${s.title}</h4>
+          <p><em>${s.authors.join(', ') || 'Unknown Author'}</em></p>
+          <img src="${s.thumbnail || '/images/no-cover.png'}" alt="Cover of ${s.title}" />
+        `;
+        suggestionsList.appendChild(div);
+      });
+    } else {
+      suggestionsList.innerHTML = '<p>No book suggestions yet. Search for books above or get a surprise!</p>';
+    }
+  }
 }
 
-function renderClubDetails() {
-  const clubId = getClubIdFromURL();
+document.addEventListener('DOMContentLoaded', () => {
   const clubs = getClubs();
-  const club = clubs.find((c) => c.id === clubId);
-
-  const container = document.getElementById('clubDetails');
-  if (!container) return;
-
-  if (!club) {
-    container.innerHTML = '<p>Club not found.</p>';
+  if (clubs.length === 0) {
+    const suggestionsSection = document.querySelector('.book-suggestions');
+    if(suggestionsSection) {
+      suggestionsSection.innerHTML = '<p>Please create a club first to see suggestions and search for books.</p>';
+    }
     return;
   }
+  
+  const club = clubs[0];
+  const clubId = club.id;
+  renderClubDetails(club);
 
-  container.innerHTML = `
-    <h2>${club.name}</h2>
-    <p>${club.description}</p>
-    <h3>Members</h3>
-    <ul>${club.members.map((m) => `<li>${m}</li>`).join('')}</ul>
-    <h3>Book Suggestions</h3>
-    <div id="suggestionsList"></div>
-    <button id="surpriseBookBtn">Surprise Me!</button>
-  `;
-
-  renderSuggestions(club);
+  initBookSearch((book) => {
+    const success = suggestBookToClub(clubId, book);
+    if (success) {
+      alert(`Book "${book.title}" suggested to club "${club.name}".`);
+      renderClubDetails(getClubs()[0]);
+    }
+  });
 
   const surpriseBtn = document.getElementById('surpriseBookBtn');
-  if (surpriseBtn) {
-    surpriseBtn.addEventListener('click', () => {
-      import('./surpriseBook.js').then((mod) => mod.surpriseBook(club.id));
+  if(surpriseBtn) {
+    surpriseBtn.addEventListener('click', async () => {
+      const currentClubs = getClubs();
+      if (currentClubs.length === 0) {
+        alert('Club not found! Please create a club first.');
+        return;
+      }
+      
+      const currentClubId = currentClubs[0].id;
+      
+      try {
+        const surpriseBookData = await surpriseBook();
+        if (surpriseBookData) {
+          const success = suggestBookToClub(currentClubId, surpriseBookData);
+          if (success) {
+            alert(`Surprise book "${surpriseBookData.title}" suggested!`);
+            renderClubDetails(getClubs()[0]);
+          } else {
+            alert('Failed to suggest the book.');
+          }
+        }
+      } catch (error) {
+        console.error('Error with Surprise Me button:', error);
+        alert('Could not get a surprise book. Please try again.');
+      }
     });
   }
-
-  const searchForm = document.getElementById('searchBookForm');
-  if (searchForm) searchForm.dataset.clubId = club.id;
-}
-
-function renderSuggestions(club) {
-  const container = document.getElementById('suggestionsList');
-  container.innerHTML = '';
-
-  if (club.suggestions.length === 0) {
-    container.innerHTML = '<p>No book suggestions yet.</p>';
-    return;
-  }
-
-  club.suggestions.forEach((suggestion) => {
-    const div = document.createElement('div');
-    div.classList.add('book-suggestion');
-    div.innerHTML = `
-      <img src="${suggestion.thumbnail}" alt="${suggestion.title}">
-      <h4>${suggestion.title}</h4>
-      <p>${suggestion.authors.join(', ')}</p>
-      <p>${suggestion.description}</p>
-      <span>Votes: ${suggestion.votes}</span>
-    `;
-
-    renderBookStatusButtons(club, suggestion, div);
-
-    container.appendChild(div);
-  });
-}
-
-function renderBookStatusButtons(club, suggestion, container) {
-  const statuses = ['available', 'reading', 'completed'];
-  statuses.forEach((status) => {
-    const btn = document.createElement('button');
-    btn.textContent = status;
-    btn.className = suggestion.status === status ? 'active' : '';
-    btn.addEventListener('click', () => {
-      updateBookStatus(club.id, suggestion.id, status);
-      renderSuggestions(club);
-    });
-    container.appendChild(btn);
-  });
-}
-
-document.addEventListener('DOMContentLoaded', renderClubDetails);
-import('./suggestBook.js');
+});

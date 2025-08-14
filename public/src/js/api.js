@@ -15,12 +15,19 @@ if (!apiKey) {
  * @returns {Promise<Array>} Lista de livros encontrados
  */
 export async function searchBooks(query) {
+  // 1. Loga o termo de busca para garantir que ele não está vazio
+  console.log('📝 Termo de busca (query):', query);
+
   if (!apiKey) return [];
 
   try {
     const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(
       query,
     )}&key=${apiKey}`;
+    
+    // 2. Loga a URL completa para verificar se ela está correta
+    console.log('🔗 URL da requisição:', url);
+
     const response = await fetch(url);
 
     if (!response.ok) {
@@ -30,8 +37,16 @@ export async function searchBooks(query) {
     }
 
     const data = await response.json();
+    
+    // 3. Loga a resposta da API antes de processá-la
+    console.log('📦 Resposta da API:', data);
 
-    if (!data.items || data.items.length === 0) return [];
+    if (!data.items || data.items.length === 0) {
+      console.log('⚠️ A API não encontrou livros para a busca. Retornando array vazio.');
+      return [];
+    }
+
+    console.log(`✅ Livros encontrados: ${data.items.length}`);
 
     return data.items.map((item) => ({
       id: item.id,
@@ -70,6 +85,7 @@ export async function searchBookById(id) {
     }
 
     const data = await res.json();
+    // Mapeamento dos dados para garantir consistência
     return {
       id: data.id,
       title: data.volumeInfo.title || 'Title not available',

@@ -27,7 +27,7 @@ export function createClub(name, description) {
   return newClub;
 }
 
-export function initClubCreation() {
+export function initClubCreation(callback) {
   const form = document.getElementById('createClubForm');
   if (!form) return;
 
@@ -44,6 +44,10 @@ export function initClubCreation() {
     createClub(name, description);
     form.reset();
     alert('Club created successfully!');
+
+    if (callback) {
+      callback();
+    }
   });
 }
 
@@ -54,42 +58,16 @@ export function suggestBookToClub(clubId, book) {
 
   const suggestion = {
     id: book.id,
-    title: book.volumeInfo.title,
-    authors: book.volumeInfo.authors || [],
-    thumbnail: book.volumeInfo.imageLinks?.thumbnail || '',
-    description: book.volumeInfo.description || '',
+    title: book.title,
+    authors: book.authors || [],
+    thumbnail: book.thumbnail || '',
+    description: book.description || '',
     votes: 0,
     status: 'available',
     progress: 0,
   };
 
   club.suggestions.push(suggestion);
-  saveClubs(clubs);
-  return true;
-}
-
-export function updateBookStatus(clubId, bookId, status) {
-  const clubs = getClubs();
-  const club = clubs.find((c) => c.id === clubId);
-  if (!club) return false;
-
-  const book = club.suggestions.find((b) => b.id === bookId);
-  if (!book) return false;
-
-  book.status = status; // 'available' | 'reading' | 'completed'
-  saveClubs(clubs);
-  return true;
-}
-
-export function updateBookProgress(clubId, bookId, progress) {
-  const clubs = getClubs();
-  const club = clubs.find((c) => c.id === clubId);
-  if (!club) return false;
-
-  const book = club.suggestions.find((b) => b.id === bookId);
-  if (!book) return false;
-
-  book.progress = Math.min(Math.max(progress, 0), 100);
   saveClubs(clubs);
   return true;
 }

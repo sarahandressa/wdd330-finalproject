@@ -1,5 +1,3 @@
-// src/js/suggestBook.js
-
 import { searchBooks } from './api.js';
 import { getClubs, saveClubs } from './club.js';
 

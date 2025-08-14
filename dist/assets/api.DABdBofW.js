@@ -1,1 +1,0 @@
-console.error("❌ Google Books API key not found! Make sure the .env is correct, starts with VITE_, and o servidor foi reiniciado.");async function e(o){return[]}async function r(o){return console.error("Google Books API key is missing"),null}export{r as a,e as s};
