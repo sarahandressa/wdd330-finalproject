@@ -1,0 +1,137 @@
+:root {
+  --bg: #fdf6e3;
+  --navy: #2c3e50;
+  --gold: #f4c95d;
+  --green: #2e8b57;
+
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Open Sans', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--navy);
+}
+
+header.site-header {
+  background-color: var(--navy);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+header.site-header h1 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+}
+
+header.site-header nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+header.site-header nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+main {
+  padding: 2rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+.intro h2 {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.create-club form,
+.book-search {
+  background: white;
+  padding: 1.5rem;
+  border-left: 5px solid var(--green);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.create-club input,
+.create-club textarea,
+.book-search input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+button {
+  background-color: var(--gold);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #d8aa40;
+}
+
+#searchResults {
+  margin-top: 1rem;
+}
+
+.book-card {
+  background: white;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 5px solid var(--gold);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+.book-card img {
+  max-width: 100px;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+footer {
+  background-color: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 4rem;
+}
+
+@media screen and (max-width: 768px) {
+  header.site-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  header.site-header nav ul {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  button {
+    width: 100%;
+  }
+}

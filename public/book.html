@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Details | Book Club Bliss</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <h1>Book Club Bliss</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="club.html">My Club</a></li>
+          <li><a href="book.html">Book Details</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="book-details">
+      <section class="book-info">
+        <h2>The Great Gatsby</h2>
+        <p><strong>Author:</strong> F. Scott Fitzgerald</p>
+        <img
+          src="https://books.google.com/books/content?id=xyz&printsec=frontcover&img=1&zoom=1"
+          alt="Book Cover"
+        />
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+          vel velit at erat commodo efficitur.
+        </p>
+      </section>
+
+      <section class="actions">
+        <button>Mark as Reading</button>
+        <button>Mark as Finished</button>
+        <button>Add to Timeline</button>
+      </section>
+
+      <section class="discussion">
+        <h3>Discussion</h3>
+        <div id="discussionBoard">
+          <div class="comment">
+            <strong>Alice:</strong> I love the symbolism in chapter 2!
+          </div>
+          <div class="comment">
+            <strong>Bob:</strong> The pacing is slower than I expected, but
+            still good.
+          </div>
+        </div>
+        <form id="commentForm">
+          <textarea
+            placeholder="Write your comment here..."
+            required
+          ></textarea>
+          <button type="submit">Post Comment</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Book Club Bliss</p>
+    </footer>
+  </body>
+</html>

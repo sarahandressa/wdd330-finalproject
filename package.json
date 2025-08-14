@@ -1,0 +1,21 @@
+{
+  "name": "book-club-bliss",
+  "version": "1.0.0",
+  "description": "Web application for organizing book clubs",
+  "main": "src/js/main.js",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build --emptyOutDir",
+    "lint": "eslint . --ext .js",
+    "format": "prettier --write .",
+    "test": "echo \"No test framework defined yet\" && exit 0"
+  },
+  "keywords": [],
+  "author": "Sarah Diaz",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "vite": "^5.2.0"
+  }
+}

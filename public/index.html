@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Club Bliss</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <h1>Book Club Bliss</h1>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="club.html">My Club</a></li>
+          <li><a href="book.html">Book Details</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="homepage">
+      <section class="intro">
+        <h2>Welcome to Book Club Bliss</h2>
+        <p>Organize, connect, and enjoy reading together like never before!</p>
+      </section>
+
+      <section class="create-club">
+        <h3>Create a Club</h3>
+        <form id="createClubForm">
+          <input type="text" placeholder="Club Name" required />
+          <textarea placeholder="Club Description" required></textarea>
+          <button type="submit">Create Club</button>
+        </form>
+      </section>
+
+      <section class="book-search">
+        <h3>Suggest a Book</h3>
+        <input
+          type="text"
+          id="bookSearchInput"
+          placeholder="Search for a book"
+        />
+        <div id="searchResults"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Book Club Bliss</p>
+    </footer>
+
+    <script type="module" src="/src/js/main.js"></script>
+  </body>
+</html>
